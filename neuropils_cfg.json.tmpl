@@ -1,0 +1,34 @@
+{
+    "config": {
+	    "log": "debug"
+    },
+    "source": {
+	    "file": {"path": "./neuropils.json"}
+    },
+    "extractor": {
+	    "json": {}
+    },
+    "transformers": [
+	    {"vertex": {"class": "Neuropil"}},
+	    {"merge": {"joinFieldName": "name", "lookup": "Neuropil.name"}}, 
+    ],
+    "loader": {
+	    "orientdb": {
+	        "dbURL": "${db}",
+	        "dbType": "graph",
+            "dbUser": "admin",
+            "dbPassword": "admin",
+            "serverUser": "admin",
+            "serverPassword": "admin",
+            "wal": false,
+	        "classes": [
+		        {"name": "Neuropil", "extends": "BioNode"}
+	        ],
+	        "indexes": [
+		        {"class": "Neuropil", "fields": ["name:string"], "type": "NOTUNIQUE"}
+	        ]
+	    }
+    }
+}
+
+    

@@ -1,0 +1,36 @@
+{
+    "config": {
+	    "log": "debug"
+    },
+    "source": {
+	    "file": {"path": "./neurons.json"}
+    },
+    "extractor": {
+	    "json": {}
+    },
+    "transformers": [
+	    {"vertex": {"class": "Neuron"}},
+	    {"edge": {"class": "owns", "joinFieldName": "neuropil", 
+		          "direction": "in", "lookup": "Neuropil.name"}}
+    ],
+    "loader": {
+	    "orientdb": {
+	        "dbURL": "${db}",
+	        "dbType": "graph",
+            "dbUser": "admin",
+            "dbPassword": "admin",
+            "serverUser": "admin",
+            "serverPassword": "admin",
+            "wal": false,
+	        "classes": [
+        		{"name": "Neuron", "extends": "BioNode"},
+		        {"name": "Owns", "extends": "Relationship"}
+	            ],
+	        "indexes": [
+		        {"class": "Neuron", "fields": ["name:string"], "type": "NOTUNIQUE"}
+	        ]
+	    }
+    }
+}
+
+    
